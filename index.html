@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulador Financiero - Rancho Nuevo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+  <link rel="icon" href="favicon.ico" type="image/png">
+  <style>
+    body { font-family: 'Arial', sans-serif; background-color: #f2f5fa; }
+    header { background-color: white; padding: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .card, .form-control, .form-select, button { border-radius: 10px; }
+    .target { background-color: #e6ecf5; }
+    .result-icon { width: 25px; }
+  </style>
+</head>
+<body>
+<header class="text-center">
+  <img src="logo.webp" alt="Logo Rancho Nuevo" height="60">
+</header>
+
+<div class="container my-5">
+
+  <section class="mb-4">
+    <h2 class="text-center">Simulador Financiero</h2>
+    <p class="text-center">Llena los siguientes campos para calcular tu plan financiero personalizado.</p>
+  </section>
+
+  <section class="row align-items-center">
+    <div class="col-md-6">
+      <div class="card p-4 shadow">
+        <div class="mb-3">
+          <label class="form-label">Precio Base del Lote</label>
+          <input type="number" id="precioBase" class="form-control" placeholder="Ej. 1000000" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Enganche (%)</label>
+          <input type="number" id="enganche" class="form-control" placeholder="Ej. 30" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Plazo (años, máximo 20 años)</label>
+          <input type="number" id="plazo" class="form-control" placeholder="Ej. 15" min="1" max="20" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Perfil financiero</label>
+          <select id="perfil" class="form-select" required>
+            <option value="1">Perfil Bajo (ingresos altos, comprobables)</option>
+            <option value="2" selected>Perfil Medio (ingresos medios)</option>
+            <option value="3">Perfil Alto (informal, sin comprobantes)</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Zona del lote</label>
+          <select id="zona" class="form-select" required>
+            <option value="estandar">Estándar</option>
+            <option value="intermedia">Intermedia</option>
+            <option value="premium">Premium</option>
+          </select>
+        </div>
+        <button onclick="calcular()" class="btn btn-primary w-100">Calcular <i class="fa-solid fa-calculator"></i></button>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card p-3 shadow">
+        <h5>📊 ¿Cómo calculamos el perfil financiero?</h5>
+        <table class="table">
+          <thead>
+            <tr><th>Perfil</th><th>Ejemplo</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Bajo</td><td>Ingreso formal, buen historial</td></tr>
+            <tr><td>Medio</td><td>Ingreso medio, informal parcial</td></tr>
+            <tr><td>Alto</td><td>Sin comprobantes o riesgo alto</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="card mt-4 p-4 shadow">
+    <h5 class="text-center mb-3">Resultados del Simulador</h5>
+    <div id="resultado">
+      Ingresa los datos y presiona "Calcular" para ver el resultado.
+    </div>
+  </section>
+</div>
+
+<script>
+function calcular() {
+  const precioBase = parseFloat(document.getElementById('precioBase').value);
+  const enganche = parseFloat(document.getElementById('enganche').value);
+  const plazo = parseInt(document.getElementById('plazo').value);
+  const perfil = parseInt(document.getElementById('perfil').value);
+  const zona = document.getElementById('zona').value;
+
+  if (!precioBase || !enganche || !plazo || plazo > 20) {
+    alert('Por favor verifica todos los campos y asegúrate que el plazo no exceda los 20 años.');
+    return;
+  }
+
+  let base = precioBase;
+  base += zona === 'intermedia' ? 75000 : zona === 'premium' ? 150000 : 0;
+  base += perfil === 3 ? 50000 : perfil === 1 ? -25000 : 0;
+
+  const engancheMonto = base * (enganche / 100);
+  const financiar = base - engancheMonto;
+  const tasa = 0.12;
+  const mensualidad = (financiar * (tasa / 12)) / (1 - Math.pow(1 + tasa / 12, -plazo * 12));
+  const totalPagado = mensualidad * plazo * 12 + engancheMonto;
+  const valorFuturo = base * Math.pow(1.08, plazo);
+  const ganancia = valorFuturo - totalPagado;
+  const roi = (ganancia / totalPagado) * 100;
+
+  let plan = "Plan Base";
+  if (enganche >= 30 && plazo <= 10) plan = "Plan Elite";
+  else if (enganche >= 20 && plazo <= 15) plan = "Plan Avance";
+
+  const descripciones = {
+    "Plan Base": "Acceso con mensualidad cómoda a largo plazo",
+    "Plan Avance": "Equilibrio entre enganche medio y mejores condiciones",
+    "Plan Elite": "Pago acelerado, mejor ROI, bonificaciones especiales"
+  };
+
+  document.getElementById('resultado').innerHTML = `
+  <div class="target p-3 rounded mb-3"><strong>${plan}</strong><br>${descripciones[plan]}</div>
+  <ul class="list-group">
+    <li class="list-group-item"><i class="fa-solid fa-coins result-icon"></i> Precio final: $${base.toLocaleString()}</li>
+    <li class="list-group-item"><i class="fa-solid fa-box result-icon"></i> Enganche: $${engancheMonto.toLocaleString()}</li>
+    <li class="list-group-item"><i class="fa-solid fa-credit-card result-icon"></i> Mensualidad: $${mensualidad.toFixed(2)}</li>
+    <li class="list-group-item"><i class="fa-solid fa-chart-line result-icon"></i> Valor futuro: $${valorFuturo.toFixed(2)}</li>
+    <li class="list-group-item"><i class="fa-solid fa-arrows-rotate result-icon"></i> Total pagado: $${totalPagado.toFixed(2)}</li>
+    <li class="list-group-item"><i class="fa-solid fa-sack-dollar result-icon"></i> Ganancia: $${ganancia.toFixed(2)}</li>
+    <li class="list-group-item"><i class="fa-solid fa-lightbulb result-icon"></i> ROI: ${roi.toFixed(1)}%</li>
+  </ul>`;
+}
+</script>
+</body>
+</html>
