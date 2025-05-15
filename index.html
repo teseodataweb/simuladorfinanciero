@@ -31,23 +31,11 @@
     <div class="col-md-6">
       <div class="card p-4 shadow">
         <div class="mb-3">
-          <label class="form-label">Precio Base del Lote</label>
-          <input type="number" id="precioBase" class="form-control" placeholder="Ej. 1000000" required>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Enganche (%)</label>
-          <input type="number" id="enganche" class="form-control" placeholder="Ej. 30" required>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Plazo (años, máximo 20 años)</label>
-          <input type="number" id="plazo" class="form-control" placeholder="Ej. 15" min="1" max="20" required>
-        </div>
-        <div class="mb-3">
           <label class="form-label">Perfil financiero</label>
           <select id="perfil" class="form-select" required>
-            <option value="1">Perfil Bajo (ingresos altos, comprobables)</option>
-            <option value="2" selected>Perfil Medio (ingresos medios)</option>
-            <option value="3">Perfil Alto (informal, sin comprobantes)</option>
+            <option value="bajo">Perfil Bajo (riesgo alto)</option>
+            <option value="medio" selected>Perfil Medio</option>
+            <option value="alto">Perfil Alto (riesgo bajo)</option>
           </select>
         </div>
         <div class="mb-3">
@@ -78,9 +66,9 @@
           <label class="form-label">Tipo de Ingresos</label>
           <select id="tipoIngresos" class="form-select" required>
             <option>Comprobables 100%</option>
-            <option>Comprobable 25%</option>
-            <option>Comprobable 50%</option>
             <option>Comprobable 75%</option>
+            <option>Comprobable 50%</option>
+            <option>Comprobable 25%</option>
             <option>Informal</option>
           </select>
         </div>
@@ -120,9 +108,9 @@
             <tr><th>Perfil</th><th>Ejemplo</th></tr>
           </thead>
           <tbody>
-            <tr><td>Bajo</td><td>Ingreso formal, buen historial</td></tr>
-            <tr><td>Medio</td><td>Ingreso medio, informal parcial</td></tr>
-            <tr><td>Alto</td><td>Sin comprobantes o riesgo alto</td></tr>
+            <tr><td>Bajo</td><td>Ingreso informal, riesgo alto</td></tr>
+            <tr><td>Medio</td><td>Ingreso medio, parcialmente comprobable</td></tr>
+            <tr><td>Alto</td><td>Ingreso alto, 100% comprobable</td></tr>
           </tbody>
         </table>
       </div>
@@ -141,53 +129,77 @@
 </div>
 
 <script>
-  function calcular() {
-    const precioBase = parseFloat(document.getElementById('precioBase').value);
-    const enganche = parseFloat(document.getElementById('enganche').value);
-    const plazo = parseInt(document.getElementById('plazo').value);
-    const perfil = parseInt(document.getElementById('perfil').value);
-    const zona = document.getElementById('zona').value;
-  
-    if (!precioBase || !enganche || !plazo || plazo > 20) {
-      alert('Por favor verifica todos los campos y asegúrate que el plazo no exceda los 20 años.');
-      return;
-    }
-  
-    let base = precioBase;
-    base += zona === 'intermedia' ? 75000 : zona === 'premium' ? 150000 : 0;
-    base += perfil === 3 ? 50000 : perfil === 1 ? -25000 : 0;
-  
-    const engancheMonto = base * (enganche / 100);
-    const financiar = base - engancheMonto;
-    const tasa = 0.12;
-    const mensualidad = (financiar * (tasa / 12)) / (1 - Math.pow(1 + tasa / 12, -plazo * 12));
-    const totalPagado = mensualidad * plazo * 12 + engancheMonto;
-    const valorFuturo = base * Math.pow(1.08, plazo);
-    const ganancia = valorFuturo - totalPagado;
-    const roi = (ganancia / totalPagado) * 100;
-  
-    let plan = "Plan Base";
-    if (enganche >= 30 && plazo <= 10) plan = "Plan Elite";
-    else if (enganche >= 20 && plazo <= 15) plan = "Plan Avance";
-  
-    const descripciones = {
-      "Plan Base": "Acceso con mensualidad cómoda a largo plazo",
-      "Plan Avance": "Equilibrio entre enganche medio y mejores condiciones",
-      "Plan Elite": "Pago acelerado, mejor ROI, bonificaciones especiales"
-    };
-  
-    document.getElementById('resultado').innerHTML = `
-    <div class="target p-3 rounded mb-3"><strong>${plan}</strong><br>${descripciones[plan]}</div>
-    <ul class="list-group">
-      <li class="list-group-item"><i class="fa-solid fa-coins result-icon"></i> Precio final: $${base.toLocaleString()}</li>
-      <li class="list-group-item"><i class="fa-solid fa-box result-icon"></i> Enganche: $${engancheMonto.toLocaleString()}</li>
-      <li class="list-group-item"><i class="fa-solid fa-credit-card result-icon"></i> Mensualidad: $${mensualidad.toFixed(2)}</li>
-      <li class="list-group-item"><i class="fa-solid fa-chart-line result-icon"></i> Valor futuro: $${valorFuturo.toFixed(2)}</li>
-      <li class="list-group-item"><i class="fa-solid fa-arrows-rotate result-icon"></i> Total pagado: $${totalPagado.toFixed(2)}</li>
-      <li class="list-group-item"><i class="fa-solid fa-sack-dollar result-icon"></i> Ganancia: $${ganancia.toFixed(2)}</li>
-      <li class="list-group-item"><i class="fa-solid fa-lightbulb result-icon"></i> ROI: ${roi.toFixed(1)}%</li>
-    </ul>`;
+function calcular() {
+  const perfil = document.getElementById('perfil').value;
+  const zona = document.getElementById('zona').value;
+  const rangoIngresos = document.getElementById('rangoIngresos').value;
+  const tipoIngresos = document.getElementById('tipoIngresos').value;
+  const edad = document.getElementById('edad').value;
+  const tipoCredito = document.getElementById('tipoCredito').value;
+
+  let base = 1000000;
+
+  base += perfil == 'bajo' ? 50000 : perfil == 'alto' ? -50000 : 0;
+  base += zona === 'intermedia' ? 75000 : zona === 'premium' ? 150000 : 0;
+
+  const ajustesIngresos = {"<10":100000,"10-15":75000,"15-20":50000,"20-25":25000,"25-30":0,"30-35":-25000,"35-40":-50000,"40-50":-75000,"50-55":-100000,"55-60":-125000,"60+":-150000};
+  base += ajustesIngresos[rangoIngresos];
+
+  const ajustesTipoIngreso = {"Comprobables 100%":-50000,"Comprobable 75%":-25000,"Comprobable 50%":0,"Comprobable 25%":25000,"Informal":50000};
+  base += ajustesTipoIngreso[tipoIngresos];
+
+  const ajustesEdad = {"18-25":50000,"25-30":25000,"30-35":0,"35-40":-25000,"40-45":-50000,"45-50":-75000,"50-55":-100000,"55-60":-125000,"60-65":-150000,"65-70":-175000};
+  base += ajustesEdad[edad];
+
+  const ajustesCredito = {"Infonavit":-25000,"Fovissste":-50000,"Bancario":0,"Propio":25000};
+  base += ajustesCredito[tipoCredito];
+
+  let plan = "Plan 6";
+  let cuotas = 36, enganchePct = 0.20;
+
+  if (perfil == 'alto' && (tipoIngresos === "Comprobables 100%") && (rangoIngresos === "60+" || rangoIngresos === "55-60" || rangoIngresos === "50-55" || rangoIngresos === "40-50" || rangoIngresos === "35-40" || rangoIngresos === "30-35") && edad <= "50-55" && tipoCredito === "Bancario" && zona === "premium") {
+    plan = "Plan 1"; cuotas = 12; enganchePct = 0.12;
+  } else if (perfil == 'alto') {
+    plan = "Plan 2"; cuotas = 24; enganchePct = 0.12;
+  } else if (perfil == 'medio' && tipoIngresos.includes("50") && edad <= "50-55") {
+    plan = "Plan 3"; cuotas = 24; enganchePct = 0.20;
+  } else if (perfil == 'medio') {
+    plan = "Plan 4"; cuotas = 30; enganchePct = 0.12;
+  } else if (perfil == 'bajo' && edad <= "40-45") {
+    plan = "Plan 5"; cuotas = 30; enganchePct = 0.20;
   }
-  </script>
+
+  const engancheMonto = base * enganchePct;
+  const financiar = base - engancheMonto;
+  const tasa = 0.12;
+  const mensualidad = (financiar * (tasa / 12)) / (1 - Math.pow(1 + tasa / 12, -cuotas));
+  const totalPagado = mensualidad * cuotas + engancheMonto;
+  const valorFuturo = base * Math.pow(1.08, cuotas/12);
+  const ganancia = valorFuturo - totalPagado;
+  const roi = (ganancia / totalPagado) * 100;
+
+  const descripciones = {
+    "Plan 1": "12 cuotas, 12% enganche",
+    "Plan 2": "24 cuotas, 12% enganche",
+    "Plan 3": "24 cuotas, 20% enganche",
+    "Plan 4": "30 cuotas, 12% enganche",
+    "Plan 5": "30 cuotas, 20% enganche",
+    "Plan 6": "36 cuotas, 20% enganche"
+  };
+
+  document.getElementById('resultado').innerHTML = `
+  <div class="target p-3 rounded mb-3"><strong>${plan}</strong><br>${descripciones[plan]}</div>
+  <ul class="list-group">
+    <li class="list-group-item"><i class="fa-solid fa-coins result-icon"></i> Precio final: $${base.toLocaleString()}</li>
+    <li class="list-group-item"><i class="fa-solid fa-box result-icon"></i> Enganche (${(enganchePct*100).toFixed(0)}%): $${engancheMonto.toLocaleString()}</li>
+    <li class="list-group-item"><i class="fa-solid fa-calendar-days result-icon"></i> Plazo: ${cuotas} meses</li>
+    <li class="list-group-item"><i class="fa-solid fa-credit-card result-icon"></i> Mensualidad: $${mensualidad.toFixed(2)}</li>
+    <li class="list-group-item"><i class="fa-solid fa-chart-line result-icon"></i> Valor futuro: $${valorFuturo.toFixed(2)}</li>
+    <li class="list-group-item"><i class="fa-solid fa-arrows-rotate result-icon"></i> Total pagado: $${totalPagado.toFixed(2)}</li>
+    <li class="list-group-item"><i class="fa-solid fa-sack-dollar result-icon"></i> Ganancia: $${ganancia.toFixed(2)}</li>
+    <li class="list-group-item"><i class="fa-solid fa-lightbulb result-icon"></i> ROI: ${roi.toFixed(1)}%</li>
+  </ul>`;
+}
+</script>
 </body>
 </html>
