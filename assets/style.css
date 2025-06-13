@@ -86,4 +86,118 @@ body {
     height: 3rem;
   }
   
-  
+  /* --- Estilo general del formulario --- */
+#wizardForm {
+  border-radius: 16px;
+  background-color: #fff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+/* --- Botones de opción --- */
+.btn-group button {
+  min-width: 140px;
+  text-align: center;
+  font-weight: 500;
+  border-radius: 12px !important;
+  border: 2px solid #ced4da;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-group button.active {
+  background-color: #0d6efd;
+  color: white;
+  border-color: #0d6efd;
+}
+
+.btn-group button:hover {
+  background-color: #e6f0ff;
+  border-color: #0d6efd;
+}
+
+/* --- Indicador de pasos --- */
+#step-indicator {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* --- Paso activo con animación --- */
+.wizard-step {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* --- Botón calcular --- */
+button.btn-primary {
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+/* --- Resultado final (paso 6) --- */
+#perfilCalculado {
+  border: 1px dashed #ccc;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  font-weight: 500;
+}
+
+/* --- Fondo general --- */
+body {
+  background: url('back.jpg') no-repeat center center fixed;
+
+  background-size: cover;
+}
+
+
+.perfil-financiero-grid {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 2rem auto;
+  flex-wrap: wrap;
+}
+
+.perfil-card {
+  background: #fff;
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  width: 260px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.perfil-card:hover {
+  transform: translateY(-5px);
+}
+
+.perfil-card .icono {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.perfil-card .titulo {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.perfil-card .descripcion {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* Colores por perfil */
+.perfil-alto .icono {
+  color: #28a745;
+}
+.perfil-medio .icono {
+  color: #007bff;
+}
+.perfil-bajo .icono {
+  color: #dc3545;
+}
