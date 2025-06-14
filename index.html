@@ -1,236 +1,264 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <title>Simulador Financiero - Rancho Nuevo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
-  <link rel="icon" href="favicon.ico" type="image/png" />
-  <link rel="stylesheet" href="assets/style.css" />
-  <link rel="stylesheet" href="assets/wizard.css" />
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Simulador Financiero - Rancho Nuevo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    />
+    <link rel="icon" href="favicon.ico" type="image/png" />
+    <link rel="stylesheet" href="assets/style.css" />
+    <link rel="stylesheet" href="assets/wizard.css" />
+  </head>
 
-<body>
-  <header class="text-center">
-    <img src="logo.webp" alt="Logo Rancho Nuevo" height="60" />
-  </header>
-
-  <div class="container my-5">
-    <section class="mb-4 text-center">
-      <h2><i class="fa-solid fa-chart-simple me-2"></i>Simulador Financiero hasta 60 meses</h2>
-      <p class="text-muted">Llena los campos para calcular tu plan ideal según tu perfil. Ahora puedes financiar hasta 5 años.</p>
-      <div class="alert alert-info mt-2">🎉 ¡Nuevo! Financia hasta 60 meses (5 años) con nuestros planes personalizados según tu perfil.</div>
-    </section>
-
-    <section class="row align-items-center">
-      <div class="">
-        <div class="card p-4 shadow" id="wizardForm">
-          <div id="step-indicator" class="text-end text-muted mb-2">Paso 1 de 6</div>
-
-          <!-- Paso 1 -->
-          <div class="wizard-step" data-step="1">
-            <label class="form-label">Zona del lote</label>
-            <div class="btn-group d-flex flex-wrap" role="group" id="zonaGrupo">
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="estandar">Estándar</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="intermedia">Intermedia</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="premium">Premium</button>
-            </div>
-            <input type="hidden" id="zona" required />
-          </div>
-
-          <!-- Paso 2 -->
-          <div class="wizard-step" data-step="2" style="display: none;">
-            <label class="form-label">Rango de Ingresos</label>
-            <div class="btn-group d-flex flex-wrap" role="group" id="rangoIngresosGrupo">
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="<10">menos de 10K</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="10-15">10 a 15K</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="15-20">15 a 20K</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="20-25">20 a 25K</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="25-30">25 a 30K</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="30-35">30 a 35K</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="35-40">35 a 40K</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="40-50">40 a 50K</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="50-55">50 a 55K</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="55-60">55 a 60K</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="60+">60K+</button>
-            </div>
-            <input type="hidden" id="rangoIngresos" required />
-          </div>
-
-          <!-- Paso 3 -->
-          <div class="wizard-step" data-step="3" style="display: none;">
-            <label class="form-label">Tipo de Ingresos</label>
-            <div class="btn-group d-flex flex-wrap" role="group" id="tipoIngresosGrupo">
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Comprobables 100%">Comprobables 100%</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Comprobable 75%">Comprobable 75%</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Comprobable 50%">Comprobable 50%</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Comprobable 25%">Comprobable 25%</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Informal">Informal</button>
-            </div>
-            <input type="hidden" id="tipoIngresos" required />
-          </div>
-
-          <!-- Paso 4 -->
-          <div class="wizard-step" data-step="4" style="display: none;">
-            <label class="form-label">Rango de Edad</label>
-            <div class="btn-group d-flex flex-wrap" role="group" id="edadGrupo">
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="18-25">18-25</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="25-30">25-30</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="30-35">30-35</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="35-40">35-40</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="40-45">40-45</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="45-50">45-50</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="50-55">50-55</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="55-60">55-60</button>
-            </div>
-            <input type="hidden" id="edad" required />
-          </div>
-
-          <!-- Paso 5 -->
-          <div class="wizard-step" data-step="5" style="display: none;">
-            <label class="form-label">Tipo de Crédito</label>
-            <div class="btn-group d-flex flex-wrap" role="group" id="tipoCreditoGrupo">
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Infonavit">Infonavit</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Fovissste">Fovissste</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Bancario">Bancario</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Recursos Propios">Recursos Propios</button>
-              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Credito Interno (Valdepeñas)">Crédito Interno (Valdepeñas)</button>
-            </div>
-            <input type="hidden" id="tipoCredito" required />
-          </div>
-          <!-- Paso 6: Resultado -->
-<div class="wizard-step" data-step="6" style="display: none;">
-  <div id="resultadoFinal"></div>
-</div>
-
-          <!-- Navegación -->
-          <div class="d-flex justify-content-between mt-4">
-            <button id="prevBtn" class="btn btn-outline-secondary" disabled>
-              <i class="fa-solid fa-arrow-left"></i> Atrás
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Columna resultados -->
-      <div class="col-md-6">
-        <div id="resultado" class="fade-in">
-          <div id="loader" style="display: none" class="text-center">
-            <div class="spinner-border text-primary" role="status">
-              <span class="visually-hidden">Calculando...</span>
-            </div>
-            <p class="mt-2">Calculando...</p>
-          </div>
-          <div id="resultadoFinal"></div>
-        </div>
+  <body>
+    <header class="text-center">
+      <img src="logo.webp" alt="Logo Rancho Nuevo" height="60" />
+    </header>
+    <section class="hero-section">
+      <h2>
+        <i class="fa-solid fa-chart-simple me-2"></i>
+        Simulador Financiero
+      </h2>
+      <p>Llena los campos para calcular tu plan ideal según tu perfil. Ahora puedes financiar hasta 5 años.</p>
+      <div class="alert alert-info">
+        🎉 ¡Nuevo! Financia hasta 60 meses (5 años) con nuestros planes personalizados según tu perfil.
       </div>
     </section>
-  </div>
-  <section class="card mt-4 p-4 shadow">
-    <div style="overflow-x: auto">
-      <iframe
-        src="assets/lotes.html"
-        frameborder="0"
-        allowfullscreen
-        style="min-width: 100%; width: 1600px; height: 350px"
-      ></iframe>
+      <div class="container my-5">
+
+        <section class="row align-items-start">
+          <!-- Columna izquierda: Formulario y resultado -->
+          <div class="col-md-6">
+            <div class="card p-4 shadow" id="wizardForm">
+              <div id="step-indicator" class="text-end text-muted mb-2">Paso 1 de 6</div>
+        
+              <!-- Paso 1 -->
+              <div class="wizard-step" data-step="1">
+                <label class="form-label">Zona del lote</label>
+                <div class="btn-group d-flex flex-wrap" role="group" id="zonaGrupo">
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="estandar">Estándar</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="intermedia">Intermedia</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="premium">Premium</button>
+                </div>
+                <input type="hidden" id="zona" required />
+              </div>
+        
+              <!-- Paso 2 -->
+              <div class="wizard-step" data-step="2" style="display: none">
+                <label class="form-label">Rango de Ingresos</label>
+                <div class="btn-group d-flex flex-wrap" role="group" id="rangoIngresosGrupo">
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="<10">menos de 10K</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="10-15">10 a 15K</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="15-20">15 a 20K</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="20-25">20 a 25K</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="25-30">25 a 30K</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="30-35">30 a 35K</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="35-40">35 a 40K</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="40-50">40 a 50K</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="50-55">50 a 55K</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="55-60">55 a 60K</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="60+">60K+</button>
+                </div>
+                <input type="hidden" id="rangoIngresos" required />
+              </div>
+        
+              <!-- Paso 3 -->
+              <div class="wizard-step" data-step="3" style="display: none">
+                <label class="form-label">Tipo de Ingresos</label>
+                <div class="btn-group d-flex flex-wrap" role="group" id="tipoIngresosGrupo">
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Comprobables 100%">Comprobables 100%</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Comprobable 75%">Comprobable 75%</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Comprobable 50%">Comprobable 50%</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Comprobable 25%">Comprobable 25%</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Informal">Informal</button>
+                </div>
+                <input type="hidden" id="tipoIngresos" required />
+              </div>
+        
+              <!-- Paso 4 -->
+              <div class="wizard-step" data-step="4" style="display: none">
+                <label class="form-label">Rango de Edad</label>
+                <div class="btn-group d-flex flex-wrap" role="group" id="edadGrupo">
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="18-25">18-25</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="25-30">25-30</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="30-35">30-35</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="35-40">35-40</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="40-45">40-45</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="45-50">45-50</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="50-55">50-55</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="55-60">55-60</button>
+                </div>
+                <input type="hidden" id="edad" required />
+              </div>
+        
+              <!-- Paso 5 -->
+              <div class="wizard-step" data-step="5" style="display: none">
+                <label class="form-label">Tipo de Crédito</label>
+                <div class="btn-group d-flex flex-wrap" role="group" id="tipoCreditoGrupo">
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Infonavit">Infonavit</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Fovissste">Fovissste</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Bancario">Bancario</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Recursos Propios">Recursos Propios</button>
+                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Credito Interno (Valdepeñas)">Crédito Interno (Valdepeñas)</button>
+                </div>
+                <input type="hidden" id="tipoCredito" required />
+              </div>
+        
+              <!-- Paso 6 -->
+              <div class="wizard-step" data-step="6" style="display: none">
+                <div id="resultadoFinal"></div>
+              </div>
+        
+              <!-- Navegación -->
+              <div class="d-flex justify-content-between mt-4">
+                <button id="prevBtn" class="btn btn-outline-secondary" disabled>
+                  <i class="fa-solid fa-arrow-left"></i> Atrás
+                </button>
+              </div>
+            </div>
+        
+            <!-- Loader -->
+            <div id="resultado" class="fade-in mt-3">
+              <div id="loader" style="display: none" class="text-center">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Calculando...</span>
+                </div>
+                <p class="mt-2">Calculando...</p>
+              </div>
+            </div>
+          </div>
+        
+  <!-- Columna derecha: Perfiles -->
+  <div class="col-md-6">
+    <div class="d-flex flex-column gap-3">
+      <div class="perfil-card perfil-alto w-100 px-3 py-3">
+        <div class="icono"><i class="fa-solid fa-arrow-up-right-dots"></i></div>
+        <div class="titulo">Perfil Alto</div>
+        <div class="descripcion">Ingreso alto, 100% comprobable</div>
+      </div>
+
+      <div class="perfil-card perfil-medio w-100 px-3 py-3">
+        <div class="icono"><i class="fa-solid fa-scale-balanced"></i></div>
+        <div class="titulo">Perfil Medio</div>
+        <div class="descripcion">Ingreso medio, parcialmente comprobable</div>
+      </div>
+
+      <div class="perfil-card perfil-bajo w-100 px-3 py-3">
+        <div class="icono"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <div class="titulo">Perfil Bajo</div>
+        <div class="descripcion">Ingreso informal, riesgo alto</div>
+      </div>
     </div>
-  </section>  
-  <!-- Contenedor de las tarjetas -->
-<section class="perfil-financiero-grid">
-  <div class="perfil-card perfil-alto">
-    <div class="icono">
-      <i class="fa-solid fa-arrow-up-right-dots"></i>
-    </div>
-    <div class="titulo">Perfil Alto</div>
-    <div class="descripcion">Ingreso alto, 100% comprobable</div>
   </div>
-
-  <div class="perfil-card perfil-medio">
-    <div class="icono">
-      <i class="fa-solid fa-scale-balanced"></i>
+        </section>
+        
     </div>
-    <div class="titulo">Perfil Medio</div>
-    <div class="descripcion">Ingreso medio, parcialmente comprobable</div>
-  </div>
+    <section class="card mt-4 p-4 shadow">
+      <div style="width: 100%; max-width: 100%; height: 100%;">
+        <iframe
+          src="planos.html"
+          frameborder="0"
+          allowfullscreen
+          style="width: 100%; height: 450px; display: block; border: none;"
+        ></iframe>
+      </div>
+      
+    </section>
 
-  <div class="perfil-card perfil-bajo">
-    <div class="icono">
-      <i class="fa-solid fa-triangle-exclamation"></i>
-    </div>
-    <div class="titulo">Perfil Bajo</div>
-    <div class="descripcion">Ingreso informal, riesgo alto</div>
-  </div>
-</section>
 
+    <!-- JS: Calculadora funcional -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const steps = document.querySelectorAll(".wizard-step");
+        let currentStepIndex = 0;
 
-  <!-- JS: Calculadora funcional -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const steps = document.querySelectorAll(".wizard-step");
-      let currentStepIndex = 0;
+        function avanzarPasoSiguiente() {
+          if (currentStepIndex < steps.length - 1) {
+            steps[currentStepIndex].style.display = "none";
+            currentStepIndex++;
+            steps[currentStepIndex].style.display = "block";
+            document.getElementById(
+              "step-indicator"
+            ).textContent = `Paso ${steps[currentStepIndex].getAttribute(
+              "data-step"
+            )} de 6`;
 
-      function avanzarPasoSiguiente() {
-        if (currentStepIndex < steps.length - 1) {
-          steps[currentStepIndex].style.display = "none";
-          currentStepIndex++;
-          steps[currentStepIndex].style.display = "block";
-          document.getElementById("step-indicator").textContent = `Paso ${steps[currentStepIndex].getAttribute("data-step")} de 6`;
-
-          if (currentStepIndex === steps.length - 1) {
-            document.getElementById("loader").style.display = "block";
-            calcular();
+            if (currentStepIndex === steps.length - 1) {
+              document.getElementById("loader").style.display = "block";
+              calcular();
+            }
           }
         }
-      }
 
-      function retrocederPaso() {
-        if (currentStepIndex > 0) {
-          steps[currentStepIndex].style.display = "none";
-          currentStepIndex--;
-          steps[currentStepIndex].style.display = "block";
-          document.getElementById("step-indicator").textContent = `Paso ${steps[currentStepIndex].getAttribute("data-step")} de 6`;
-        }
-      }
-
-      document.querySelectorAll(".wizard-step .btn-group button").forEach((button) => {
-        button.addEventListener("click", function () {
-          const group = this.parentElement;
-          group.querySelectorAll("button").forEach((btn) => btn.classList.remove("active"));
-          this.classList.add("active");
-          const inputId = group.id.replace("Grupo", "");
-          const inputHidden = document.getElementById(inputId);
-          if (inputHidden) {
-            inputHidden.value = this.getAttribute("data-value");
+        function retrocederPaso() {
+          if (currentStepIndex > 0) {
+            steps[currentStepIndex].style.display = "none";
+            currentStepIndex--;
+            steps[currentStepIndex].style.display = "block";
+            document.getElementById(
+              "step-indicator"
+            ).textContent = `Paso ${steps[currentStepIndex].getAttribute(
+              "data-step"
+            )} de 6`;
           }
-          setTimeout(() => avanzarPasoSiguiente(), 400);
-        });
+        }
+
+        document
+          .querySelectorAll(".wizard-step .btn-group button")
+          .forEach((button) => {
+            button.addEventListener("click", function () {
+              const group = this.parentElement;
+              group
+                .querySelectorAll("button")
+                .forEach((btn) => btn.classList.remove("active"));
+              this.classList.add("active");
+              const inputId = group.id.replace("Grupo", "");
+              const inputHidden = document.getElementById(inputId);
+              if (inputHidden) {
+                inputHidden.value = this.getAttribute("data-value");
+              }
+              setTimeout(() => avanzarPasoSiguiente(), 400);
+            });
+          });
+
+        document
+          .getElementById("prevBtn")
+          ?.addEventListener("click", retrocederPaso);
       });
+    </script>
 
-      document.getElementById("prevBtn")?.addEventListener("click", retrocederPaso);
-    });
-  </script>
-
-  <script>
-    function mostrarResultados(data) {
-      if (
-        data.precio <= 0 ||
-        data.enganche <= 0 ||
-        data.mensualidad <= 0 ||
-        data.totalPagado <= 0 ||
-        isNaN(data.roi)
-      ) {
-        document.getElementById("resultadoFinal").innerHTML = `
+    <script>
+      function mostrarResultados(data) {
+        if (
+          data.precio <= 0 ||
+          data.enganche <= 0 ||
+          data.mensualidad <= 0 ||
+          data.totalPagado <= 0 ||
+          isNaN(data.roi)
+        ) {
+          document.getElementById("resultadoFinal").innerHTML = `
           <div class="alert alert-danger">⚠️ No se pudo calcular un escenario válido. Revisa los datos ingresados o prueba otra combinación.</div>`;
-        return;
-      }
+          return;
+        }
 
-      document.getElementById("resultadoFinal").innerHTML = `
+        document.getElementById("resultadoFinal").innerHTML = `
         <div class="wizard-step" data-step="6">
           <div class="alert alert-primary text-center mb-4" role="alert">
             <i class="fa-solid fa-star me-2"></i>
-            <strong id="resPlan">${data.plan}</strong> – <span id="resResumen">${data.plazo} meses, ${Math.round(data.enganche / data.precio * 100)}% enganche</span>
+            <strong id="resPlan">${
+              data.plan
+            }</strong> – <span id="resResumen">${
+          data.plazo
+        } meses, ${Math.round(
+          (data.enganche / data.precio) * 100
+        )}% enganche</span>
           </div>
           <h5 class="mb-4 text-center">
             <i class="fa-solid fa-user-check"></i> Resultado Financiero
@@ -238,95 +266,135 @@
           <div class="row text-center">
             <div class="col-6 mb-3"><p class="small text-muted">Precio final</p><div class="fw-bold fs-5 text-primary">$${data.precio.toLocaleString()}</div></div>
             <div class="col-6 mb-3"><p class="small text-muted">Enganche</p><div class="fw-bold fs-5 text-primary">$${data.enganche.toLocaleString()}</div></div>
-            <div class="col-6 mb-3"><p class="small text-muted">Plazo</p><div class="fw-bold fs-5 text-primary">${data.plazo} meses</div></div>
-            <div class="col-6 mb-3"><p class="small text-muted">Mensualidad</p><div class="fw-bold fs-5 text-primary">$${data.mensualidad.toLocaleString(undefined, { minimumFractionDigits: 2 })}</div></div>
-            <div class="col-6 mb-3"><p class="small text-muted">Valor futuro</p><div class="fw-bold fs-5 text-primary">$${data.valorFuturo.toLocaleString(undefined, { minimumFractionDigits: 2 })}</div></div>
-            <div class="col-6 mb-3"><p class="small text-muted">Total pagado</p><div class="fw-bold fs-5 text-primary">$${data.totalPagado.toLocaleString(undefined, { minimumFractionDigits: 2 })}</div></div>
-            <div class="col-6 mb-3"><p class="small text-muted">Ganancia</p><div class="fw-bold fs-5 text-primary">$${data.ganancia.toLocaleString(undefined, { minimumFractionDigits: 2 })}</div></div>
-            <div class="col-6 mb-3"><p class="small text-muted">ROI</p><div class="fw-bold fs-5 text-primary">${data.roi.toFixed(1)}%</div></div>
+            <div class="col-6 mb-3"><p class="small text-muted">Plazo</p><div class="fw-bold fs-5 text-primary">${
+              data.plazo
+            } meses</div></div>
+            <div class="col-6 mb-3"><p class="small text-muted">Mensualidad</p><div class="fw-bold fs-5 text-primary">$${data.mensualidad.toLocaleString(
+              undefined,
+              { minimumFractionDigits: 2 }
+            )}</div></div>
+            <div class="col-6 mb-3"><p class="small text-muted">Valor futuro</p><div class="fw-bold fs-5 text-primary">$${data.valorFuturo.toLocaleString(
+              undefined,
+              { minimumFractionDigits: 2 }
+            )}</div></div>
+            <div class="col-6 mb-3"><p class="small text-muted">Total pagado</p><div class="fw-bold fs-5 text-primary">$${data.totalPagado.toLocaleString(
+              undefined,
+              { minimumFractionDigits: 2 }
+            )}</div></div>
+            <div class="col-6 mb-3"><p class="small text-muted">Ganancia</p><div class="fw-bold fs-5 text-primary">$${data.ganancia.toLocaleString(
+              undefined,
+              { minimumFractionDigits: 2 }
+            )}</div></div>
+            <div class="col-6 mb-3"><p class="small text-muted">ROI</p><div class="fw-bold fs-5 text-primary">${data.roi.toFixed(
+              1
+            )}%</div></div>
           </div>
           <div class="text-center mt-4">
-            <a href="#contacto" class="btn btn-success btn-lg">Contactar Asesor</a>
+            <a href="https://wa.me/5217712660637" class="btn btn-success btn-lg">Contactar Asesor</a>
           </div>
         </div>`;
-    }
-
-    function calcular() {
-      const zona = document.getElementById("zona")?.value;
-      const rangoIngresos = document.getElementById("rangoIngresos")?.value;
-      const tipoIngresos = document.getElementById("tipoIngresos")?.value;
-      const edad = document.getElementById("edad")?.value;
-      const tipoCredito = document.getElementById("tipoCredito")?.value;
-
-      if (!zona || !rangoIngresos || !tipoIngresos || !edad || !tipoCredito) {
-        document.getElementById("resultadoFinal").innerHTML = `
-          <div class="alert alert-warning text-center">⚠️ Faltan datos para realizar la simulación.</div>`;
-        document.getElementById("loader").style.display = "none";
-        return;
       }
 
-      const ingresosNum = rangoIngresos.includes("+") ? 65 :
-                          rangoIngresos.includes("<") ? 5 :
-                          parseInt(rangoIngresos.split("-")[0]);
-      const edadNum = parseInt(edad.split("-")[0]);
+      function calcular() {
+  const zona = document.getElementById("zona")?.value;
+  const rangoIngresos = document.getElementById("rangoIngresos")?.value;
+  const tipoIngresos = document.getElementById("tipoIngresos")?.value;
+  const edad = document.getElementById("edad")?.value;
+  const tipoCredito = document.getElementById("tipoCredito")?.value;
 
-      let perfil = "medio";
-      if (
-        (tipoIngresos === "Comprobables 100%" || tipoIngresos === "Comprobable 75%") &&
-        ingresosNum >= 30 &&
-        edadNum >= 35 &&
-        tipoCredito === "Bancario"
-      ) perfil = "alto";
-      else if (tipoIngresos === "Informal" || ingresosNum < 15) perfil = "bajo";
+  if (!zona || !rangoIngresos || !tipoIngresos || !edad || !tipoCredito) {
+    document.getElementById("resultadoFinal").innerHTML = `
+      <div class="alert alert-warning text-center">⚠️ Faltan datos para realizar la simulación.</div>`;
+    document.getElementById("loader").style.display = "none";
+    return;
+  }
 
-      let base = 1000000;
-      base += zona === "intermedia" ? 75000 : zona === "premium" ? 150000 : 0;
-      base += perfil === "alto" ? -50000 : perfil === "bajo" ? 50000 : 0;
+  const ingresosNum = rangoIngresos.includes("+")
+    ? 65
+    : rangoIngresos.includes("<")
+    ? 5
+    : parseInt(rangoIngresos.split("-")[0]);
 
-      let enganchePct = 0.2;
-      let cuotas = 60;
-      let plan = "Plan 6";
+  const edadNum = parseInt(edad.split("-")[0]);
 
-      if (perfil === "alto") {
-        plan = "Plan 1";
-        cuotas = 12;
-        enganchePct = 0.28;
-      } else if (perfil === "medio" && ingresosNum >= 20 && edadNum >= 30) {
-        plan = "Plan 3";
-        cuotas = 36;
-        enganchePct = 0.20;
-      } else if (perfil === "bajo") {
-        plan = "Plan 5";
-        cuotas = 48;
-        enganchePct = 0.20;
-      }
+  // Evaluación del perfil
+  let perfil = "medio";
+  if (
+    (tipoIngresos === "Comprobables 100%" || tipoIngresos === "Comprobable 75%") &&
+    ingresosNum >= 30 &&
+    edadNum >= 35 &&
+    tipoCredito === "Bancario"
+  ) {
+    perfil = "alto";
+  } else if (tipoIngresos === "Informal" || ingresosNum < 15) {
+    perfil = "bajo";
+  }
 
-      const enganche = base * enganchePct;
-      const montoFinanciar = base - enganche;
-      const tasa = 0.12;
+  // Precio base ajustado por zona y perfil
+  let base = 1000000;
+  base += zona === "intermedia" ? 75000 : zona === "premium" ? 150000 : 0;
+  base += perfil === "alto" ? -50000 : perfil === "bajo" ? 50000 : 0;
 
-      const mensualidad = (montoFinanciar * (tasa / 12)) / (1 - Math.pow(1 + tasa / 12, -cuotas));
-      const totalPagado = mensualidad * cuotas + enganche;
-      const valorFuturo = base * Math.pow(1.08, cuotas / 12);
-      const ganancia = valorFuturo - totalPagado;
-      const roi = (ganancia / totalPagado) * 100;
+  // Lógica de selección de plan
+  let plan = "Plan 6";
+  let cuotas = 60;
+  let enganchePct = 0.20;
 
-      mostrarResultados({
-        plan,
-        precio: Math.round(base),
-        enganche: Math.round(enganche),
-        plazo: cuotas,
-        mensualidad,
-        valorFuturo,
-        totalPagado,
-        ganancia,
-        roi
-      });
+  if (perfil === "alto") {
+    plan = "Plan 1";
+    cuotas = 12;
+    enganchePct = 0.28;
+  } else if (
+    perfil === "medio" &&
+    ingresosNum >= 25 &&
+    edadNum >= 30 &&
+    (tipoIngresos === "Comprobables 100%" || tipoIngresos === "Comprobable 75%")
+  ) {
+    plan = "Plan 2";
+    cuotas = 24;
+    enganchePct = 0.25;
+  } else if (perfil === "medio" && ingresosNum >= 20 && edadNum >= 30) {
+    plan = "Plan 3";
+    cuotas = 30;
+    enganchePct = 0.22;
+  } else if (perfil === "medio" && ingresosNum >= 18 && edadNum >= 28) {
+    plan = "Plan 4";
+    cuotas = 36;
+    enganchePct = 0.20;
+  } else if (perfil === "bajo") {
+    plan = "Plan 5";
+    cuotas = 48;
+    enganchePct = 0.20;
+  }
 
-      document.getElementById("loader").style.display = "none";
-    }
-  </script>
-  
+  // Cálculo financiero
+  const enganche = base * enganchePct;
+  const montoFinanciar = base - enganche;
+  const tasa = 0.12;
 
-</body>
+  const mensualidad =
+    (montoFinanciar * (tasa / 12)) /
+    (1 - Math.pow(1 + tasa / 12, -cuotas));
+  const totalPagado = mensualidad * cuotas + enganche;
+  const valorFuturo = base * Math.pow(1.08, cuotas / 12);
+  const ganancia = valorFuturo - totalPagado;
+  const roi = (ganancia / totalPagado) * 100;
+
+  mostrarResultados({
+    plan,
+    precio: Math.round(base),
+    enganche: Math.round(enganche),
+    plazo: cuotas,
+    mensualidad,
+    valorFuturo,
+    totalPagado,
+    ganancia,
+    roi,
+  });
+
+  document.getElementById("loader").style.display = "none";
+}
+
+    </script>
+  </body>
 </html>
