@@ -209,7 +209,7 @@ button.btn-primary {
   padding: 2rem;
   text-align: center;
 
-  background: url('/assets/backherosection.jpg') no-repeat center center;
+  background: url('backherosection.jpg') no-repeat center center;
   background-size: cover;
   background-position: center;
 }
