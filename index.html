@@ -295,106 +295,64 @@
         </div>`;
       }
 
-      function calcular() {
-  const zona = document.getElementById("zona")?.value;
-  const rangoIngresos = document.getElementById("rangoIngresos")?.value;
-  const tipoIngresos = document.getElementById("tipoIngresos")?.value;
-  const edad = document.getElementById("edad")?.value;
-  const tipoCredito = document.getElementById("tipoCredito")?.value;
+      async function calcular() {
+    const zona = document.getElementById("zona")?.value;
+    const rangoIngresos = document.getElementById("rangoIngresos")?.value;
+    const tipoIngreso = document.getElementById("tipoIngresos")?.value;
+    const edad = document.getElementById("edad")?.value;
+    const tipoCredito = document.getElementById("tipoCredito")?.value;
 
-  if (!zona || !rangoIngresos || !tipoIngresos || !edad || !tipoCredito) {
-    document.getElementById("resultadoFinal").innerHTML = `
-      <div class="alert alert-warning text-center">⚠️ Faltan datos para realizar la simulación.</div>`;
+    if (!zona || !rangoIngresos || !tipoIngreso || !edad || !tipoCredito) {
+      document.getElementById("resultadoFinal").innerHTML = `
+        <div class="alert alert-warning text-center">⚠️ Faltan datos para realizar la simulación.</div>`;
+      document.getElementById("loader").style.display = "none";
+      return;
+    }
+
+    // Arma el objeto para enviar al backend
+    const datos = {
+      precioFinal: 1000000, // puedes hacerlo dinámico si quieres
+      enganchePorcentaje: 20, // puedes cambiar esto según lógica del wizard
+      plazoAnios: 5,
+      frecuenciaPago: "Mensual",
+      edad: edad,
+      rangoIngresos: rangoIngresos,
+      tipoIngreso: tipoIngreso,
+      zonaLote: zona.charAt(0).toUpperCase() + zona.slice(1), // capitalizar
+      tipoCredito: tipoCredito,
+      codigoPostal: "" // opcional por ahora
+    };
+    console.log("📦 Enviando datos a backend:", datos);
+
+    try {
+      const response = await fetch("http://localhost:5000/simular", {
+        method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(datos),
+});
+
+      const resultados = await response.json();
+
+      mostrarResultados({
+        plan: (resultados.nivel_riesgo || "desconocido").toUpperCase(),
+        precio: datos.precioFinal,
+        enganche: resultados.valor_enganche,
+        plazo: resultados.num_pagos,
+        mensualidad: resultados.mensualidad,
+        valorFuturo: resultados.valor_futuro,
+        totalPagado: resultados.total_pagado,
+        ganancia: resultados.ganancia_estimada,
+        roi: resultados.roi * 100,
+      });
+
+    } catch (error) {
+      console.error("Error:", error);
+      document.getElementById("resultadoFinal").innerHTML = `
+        <div class="alert alert-danger text-center">❌ Hubo un problema con el servidor.</div>`;
+    }
+
     document.getElementById("loader").style.display = "none";
-    return;
   }
-
-  const ingresosNum = rangoIngresos.includes("+")
-    ? 65
-    : rangoIngresos.includes("<")
-    ? 5
-    : parseInt(rangoIngresos.split("-")[0]);
-
-  const edadNum = parseInt(edad.split("-")[0]);
-
-  // Evaluación del perfil
-  let perfil = "medio";
-  if (
-    (tipoIngresos === "Comprobables 100%" || tipoIngresos === "Comprobable 75%") &&
-    ingresosNum >= 30 &&
-    edadNum >= 35 &&
-    tipoCredito === "Bancario"
-  ) {
-    perfil = "alto";
-  } else if (tipoIngresos === "Informal" || ingresosNum < 15) {
-    perfil = "bajo";
-  }
-
-  // Precio base ajustado por zona y perfil
-  let base = 1000000;
-  base += zona === "intermedia" ? 75000 : zona === "premium" ? 150000 : 0;
-  base += perfil === "alto" ? -50000 : perfil === "bajo" ? 50000 : 0;
-
-  // Lógica de selección de plan
-  let plan = "Plan 6";
-  let cuotas = 60;
-  let enganchePct = 0.20;
-
-  if (perfil === "alto") {
-    plan = "Plan 1";
-    cuotas = 12;
-    enganchePct = 0.28;
-  } else if (
-    perfil === "medio" &&
-    ingresosNum >= 25 &&
-    edadNum >= 30 &&
-    (tipoIngresos === "Comprobables 100%" || tipoIngresos === "Comprobable 75%")
-  ) {
-    plan = "Plan 2";
-    cuotas = 24;
-    enganchePct = 0.25;
-  } else if (perfil === "medio" && ingresosNum >= 20 && edadNum >= 30) {
-    plan = "Plan 3";
-    cuotas = 30;
-    enganchePct = 0.22;
-  } else if (perfil === "medio" && ingresosNum >= 18 && edadNum >= 28) {
-    plan = "Plan 4";
-    cuotas = 36;
-    enganchePct = 0.20;
-  } else if (perfil === "bajo") {
-    plan = "Plan 5";
-    cuotas = 48;
-    enganchePct = 0.20;
-  }
-
-  // Cálculo financiero
-  const enganche = base * enganchePct;
-  const montoFinanciar = base - enganche;
-  const tasa = 0.12;
-
-  const mensualidad =
-    (montoFinanciar * (tasa / 12)) /
-    (1 - Math.pow(1 + tasa / 12, -cuotas));
-  const totalPagado = mensualidad * cuotas + enganche;
-  const valorFuturo = base * Math.pow(1.08, cuotas / 12);
-  const ganancia = valorFuturo - totalPagado;
-  const roi = (ganancia / totalPagado) * 100;
-
-  mostrarResultados({
-    plan,
-    precio: Math.round(base),
-    enganche: Math.round(enganche),
-    plazo: cuotas,
-    mensualidad,
-    valorFuturo,
-    totalPagado,
-    ganancia,
-    roi,
-  });
-
-  document.getElementById("loader").style.display = "none";
-}
-
     </script>
   </body>
 </html>
