@@ -160,79 +160,72 @@
         </section>
         
     </div>
-    <section class="card mt-4 p-4 shadow">
-      <div style="width: 100%; max-width: 100%; height: 100%;">
-        <iframe
-          src="assets/lotes.html"
-          frameborder="0"
-          allowfullscreen
-          style="width: 100%; height: 450px; display: block; border: none;"
-        ></iframe>
-      </div>
-      
-    </section>
+    <iframe
+    src="visor.html"
+    frameborder="0"
+    allowfullscreen
+    style="width: 100%; height: 450px; display: block; border: none;"
+  ></iframe>
 
 
-    <!-- JS: Calculadora funcional -->
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const steps = document.querySelectorAll(".wizard-step");
-        let currentStepIndex = 0;
-
-        function avanzarPasoSiguiente() {
-          if (currentStepIndex < steps.length - 1) {
-            steps[currentStepIndex].style.display = "none";
-            currentStepIndex++;
-            steps[currentStepIndex].style.display = "block";
-            document.getElementById(
-              "step-indicator"
-            ).textContent = `Paso ${steps[currentStepIndex].getAttribute(
-              "data-step"
-            )} de 6`;
-
-            if (currentStepIndex === steps.length - 1) {
-              document.getElementById("loader").style.display = "block";
-              calcular();
-            }
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const steps = document.querySelectorAll(".wizard-step");
+      let currentStep = 1;
+      const totalSteps = steps.length;
+  
+      function showStep(step) {
+        steps.forEach((el) => {
+          el.style.display = el.dataset.step == step ? "block" : "none";
+        });
+  
+        document.getElementById("step-indicator").textContent = `Paso ${step} de ${totalSteps}`;
+        document.getElementById("prevBtn").disabled = step === 1;
+      }
+  
+      function avanzarPasoSiguiente() {
+        if (currentStep < totalSteps) {
+          currentStep++;
+          showStep(currentStep);
+  
+          if (currentStep === totalSteps) {
+            document.getElementById("loader").style.display = "block";
+            calcular(); // ya lo tienes definido
           }
         }
-
-        function retrocederPaso() {
-          if (currentStepIndex > 0) {
-            steps[currentStepIndex].style.display = "none";
-            currentStepIndex--;
-            steps[currentStepIndex].style.display = "block";
-            document.getElementById(
-              "step-indicator"
-            ).textContent = `Paso ${steps[currentStepIndex].getAttribute(
-              "data-step"
-            )} de 6`;
-          }
+      }
+  
+      function retrocederPaso() {
+        if (currentStep > 1) {
+          currentStep--;
+          showStep(currentStep);
         }
-
-        document
-          .querySelectorAll(".wizard-step .btn-group button")
-          .forEach((button) => {
-            button.addEventListener("click", function () {
-              const group = this.parentElement;
-              group
-                .querySelectorAll("button")
-                .forEach((btn) => btn.classList.remove("active"));
-              this.classList.add("active");
-              const inputId = group.id.replace("Grupo", "");
-              const inputHidden = document.getElementById(inputId);
-              if (inputHidden) {
-                inputHidden.value = this.getAttribute("data-value");
-              }
-              setTimeout(() => avanzarPasoSiguiente(), 400);
-            });
-          });
-
-        document
-          .getElementById("prevBtn")
-          ?.addEventListener("click", retrocederPaso);
+      }
+  
+      // Avanzar al hacer clic en un botón de grupo
+      document.querySelectorAll(".wizard-step .btn-group button").forEach((button) => {
+        button.addEventListener("click", function () {
+          const group = this.parentElement;
+          group.querySelectorAll("button").forEach((btn) => btn.classList.remove("active"));
+          this.classList.add("active");
+  
+          const inputId = group.id.replace("Grupo", "");
+          const inputHidden = document.getElementById(inputId);
+          if (inputHidden) {
+            inputHidden.value = this.getAttribute("data-value");
+          }
+  
+          setTimeout(() => avanzarPasoSiguiente(), 400);
+        });
       });
-    </script>
+  
+      document.getElementById("prevBtn").addEventListener("click", retrocederPaso);
+  
+      // Mostrar el primer paso al cargar
+      showStep(currentStep);
+    });
+  </script>
+  
 
     <script>
       function mostrarResultados(data) {
@@ -354,5 +347,39 @@
     document.getElementById("loader").style.display = "none";
   }
     </script>
+    <script>
+      let currentStep = 1;
+      const totalSteps = 6;
+    
+      function showStep(step) {
+        document.querySelectorAll('.wizard-step').forEach(el => {
+          el.style.display = el.dataset.step == step ? 'block' : 'none';
+        });
+    
+        document.getElementById('step-indicator').textContent = `Paso ${step} de ${totalSteps}`;
+        document.getElementById('prevBtn').disabled = step === 1;
+      }
+    
+      document.getElementById('prevBtn').addEventListener('click', () => {
+        if (currentStep > 1) {
+          currentStep--;
+          showStep(currentStep);
+        }
+      });
+    
+      // Si también tienes botón “Siguiente”, podrías agregar:
+      // document.getElementById('nextBtn').addEventListener('click', () => {
+      //   if (currentStep < totalSteps) {
+      //     currentStep++;
+      //     showStep(currentStep);
+      //   }
+      // });
+    
+      // Mostrar paso inicial al cargar
+      document.addEventListener('DOMContentLoaded', () => {
+        showStep(currentStep);
+      });
+    </script>
+    
   </body>
 </html>
