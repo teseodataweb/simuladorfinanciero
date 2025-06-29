@@ -14,13 +14,13 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
     />
     <link rel="icon" href="favicon.ico" type="image/png" />
-    <link rel="stylesheet" href="static/style.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="static/wizard.css" />
   </head>
 
   <body>
     <header class="text-center">
-      <img src="logo.webp" alt="Logo Rancho Nuevo" height="60" />
+      <img src="{{ url_for('static', filename='logo.webp') }}" alt="Logo Rancho Nuevo" height="60" />
     </header>
     <section class="hero-section">
       <h2>
@@ -319,10 +319,10 @@
     console.log("📦 Enviando datos a backend:", datos);
 
     try {
-      const response = await fetch("http://localhost:5000/simular", {
-        method: "POST",
+      const response = await fetch("/simular", {
+  method: "POST",
   headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(datos),
+  body: JSON.stringify(datos)
 });
 
       const resultados = await response.json();
