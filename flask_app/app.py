@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from modelo_riesgo_credito import simular_credito
+from flask_app.modelo_riesgo_credito import simular_credito
 
 app = Flask(__name__)
 CORS(app)
