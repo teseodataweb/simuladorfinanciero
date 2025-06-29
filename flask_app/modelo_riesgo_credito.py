@@ -21,8 +21,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib.colors import LinearSegmentedColormap
-import ipywidgets as widgets
-from IPython.display import display, HTML, clear_output
 
 # Configuración de visualización
 plt.style.use('seaborn-v0_8-whitegrid')
