@@ -21,3 +21,6 @@ def simular():
         return jsonify(resultados)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+@app.route('/visor')
+def visor():
+    return render_template("visor.html")

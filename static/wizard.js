@@ -2,7 +2,6 @@ let currentStep = 1;
 const totalSteps = 6;
 
 const steps = document.querySelectorAll(".wizard-step");
-const nextBtn = document.getElementById("nextBtn");
 const prevBtn = document.getElementById("prevBtn");
 const stepIndicator = document.getElementById("step-indicator");
 
