@@ -64,7 +64,7 @@ simulador-financiero/
 Si quieres correrlo localmente:
 
 ```bash
-git clone https://github.com/tu_usuario/simulador-financiero.git
+git clone https://github.com/teseodataweb/simuladorfinanciero.git
 cd simulador-financiero
 python -m venv venv
 source venv/bin/activate     # En Windows: venv\Scripts\activate
