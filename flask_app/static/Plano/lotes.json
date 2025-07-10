@@ -1,0 +1,25 @@
+{
+  "lotes": [
+    { "id": "L28 MZA15", "coordenadasFisicas": { "x": "140px", "y": "200px" }, "manzana": "15", "area": 105, "valor": 630000, "tipo": "estandar", "estado": "disponible", "ultimaActualizacion": "2024-05-15" },
+    { "id": "L27 MZA15", "coordenadasFisicas": { "x": "426px", "y": "200px" }, "manzana": "15", "area": 105, "valor": null, "tipo": "premium", "estado": "no-disponible", "ultimaActualizacion": "2024-05-15" },
+    { "id": "AMENIDAD", "coordenadasFisicas": { "x": "712px", "y": "200px" }, "manzana": "15", "area": 105, "valor": null, "tipo": "amenidad", "estado": "amenidad", "ultimaActualizacion": "2024-05-15" },
+    { "id": "L25 MZA15", "coordenadasFisicas": { "x": "998px", "y": "200px" }, "manzana": "15", "area": 105, "valor": null, "tipo": "premium", "estado": "no-disponible", "ultimaActualizacion": "2024-05-15" },
+    { "id": "L24 MZA15", "coordenadasFisicas": { "x": "1284px", "y": "200px" }, "manzana": "15", "area": 105, "valor": 630000, "tipo": "estandar", "estado": "disponible", "ultimaActualizacion": "2024-05-15" },
+    { "id": "L23 MZA15", "coordenadasFisicas": { "x": "1570px", "y": "200px" }, "manzana": "15", "area": 105, "valor": null, "tipo": "intermedia", "estado": "vendido", "ultimaActualizacion": "2024-05-15" },
+    { "id": "L22 MZA15", "coordenadasFisicas": { "x": "1856px", "y": "200px" }, "manzana": "15", "area": 105, "valor": null, "tipo": "intermedia", "estado": "vendido", "ultimaActualizacion": "2024-05-15" },
+    { "id": "L21 MZA15", "coordenadasFisicas": { "x": "2142px", "y": "200px" }, "manzana": "15", "area": 105, "valor": 630000, "tipo": "estandar", "estado": "disponible", "ultimaActualizacion": "2024-05-15" },
+    { "id": "L20 MZA15", "coordenadasFisicas": { "x": "2428px", "y": "200px" }, "manzana": "15", "area": 105, "valor": null, "tipo": "intermedia", "estado": "vendido", "ultimaActualizacion": "2024-05-15" },
+    { "id": "L19 MZA15", "coordenadasFisicas": { "x": "2714px", "y": "200px" }, "manzana": "15", "area": 105, "valor": null, "tipo": "premium", "estado": "no-disponible", "ultimaActualizacion": "2024-05-15" },
+
+    { "id": "L10 MZA16", "coordenadasFisicas": { "x": "140px", "y": "1000px" }, "manzana": "16", "area": 105, "valor": null, "tipo": "estandar", "estado": "vendido", "ultimaActualizacion": "2024-05-15" },
+    { "id": "L11 MZA16", "coordenadasFisicas": { "x": "426px", "y": "1000px" }, "manzana": "16", "area": 105, "valor": 670000, "tipo": "premium", "estado": "disponible", "ultimaActualizacion": "2024-05-15" },
+    { "id": "L12 MZA16", "coordenadasFisicas": { "x": "712px", "y": "1000px" }, "manzana": "16", "area": 105, "valor": null, "tipo": "premium", "estado": "no-disponible", "ultimaActualizacion": "2024-05-15" },
+    { "id": "L13 MZA16", "coordenadasFisicas": { "x": "998px", "y": "1000px" }, "manzana": "16", "area": 105, "valor": 670000, "tipo": "premium", "estado": "disponible", "ultimaActualizacion": "2024-05-15" },
+    { "id": "L14 MZA16", "coordenadasFisicas": { "x": "1284px", "y": "1000px" }, "manzana": "16", "area": 105, "valor": null, "tipo": "intermedia", "estado": "vendido", "ultimaActualizacion": "2024-05-15" },
+    { "id": "L15 MZA16", "coordenadasFisicas": { "x": "1570px", "y": "1000px" }, "manzana": "16", "area": 105, "valor": null, "tipo": "intermedia", "estado": "vendido", "ultimaActualizacion": "2024-05-15" },
+    { "id": "L16 MZA16", "coordenadasFisicas": { "x": "1856px", "y": "1000px" }, "manzana": "16", "area": 105, "valor": null, "tipo": "intermedia", "estado": "vendido", "ultimaActualizacion": "2024-05-15" },
+    { "id": "L17 MZA16", "coordenadasFisicas": { "x": "2142px", "y": "1000px" }, "manzana": "16", "area": 105, "valor": null, "tipo": "intermedia", "estado": "vendido", "ultimaActualizacion": "2024-05-15" },
+    { "id": "L18 MZA16", "coordenadasFisicas": { "x": "2428px", "y": "1000px" }, "manzana": "16", "area": 105, "valor": null, "tipo": "intermedia", "estado": "vendido", "ultimaActualizacion": "2024-05-15" },
+    { "id": "L19 MZA16", "coordenadasFisicas": { "x": "2714px", "y": "1000px" }, "manzana": "16", "area": 105, "valor": null, "tipo": "premium", "estado": "no-disponible", "ultimaActualizacion": "2024-05-15" }
+  ]
+}

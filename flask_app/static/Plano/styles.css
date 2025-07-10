@@ -1,0 +1,146 @@
+/* Reset básico */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+/* Contenedor con scroll y zoom */
+#zoomWrapper {
+  overflow: auto;
+  width: 100%;
+  height: 80vh;
+  position: absolute;
+  border: 1px solid #ccc;
+}
+
+/* Contenedor del plano + lotes */
+#planoContainer {
+  position: relative;
+  transform-origin: top-center;
+  transition: transform 0.2s ease;
+}
+
+/* Imagen del plano */
+#planoBase {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Contenedor de los lotes */
+#lotesContainer {
+  position: absolute;
+  top: 0;
+  left: 6.5rem;
+}
+
+/* Estilo general de cada lote */
+.lote {
+  position:fixed;
+  transform: translate(-50%, -50%);
+  width: 6em;
+  height: 3.5em;
+  border-radius: 0.5em;
+  white-space: nowrap;
+  color: white;
+  font-size: clamp(0.35em, 1vw, 1.2em);
+  font-weight: bold;
+  text-align: center;
+  line-height: 3.25em;
+  margin: 0.2em;
+  cursor: pointer;
+  z-index: 1;
+}
+
+/* Estado seleccionado */
+.lote.seleccionado {
+  outline: 4px solid cyan;
+  z-index: 2;
+}
+
+/* Colores según estado */
+.disponible {
+  background-color: #229aea;
+}
+
+.vendido {
+  background-color: #f44336;
+}
+
+.no-disponible {
+  background-color: #ffc107;
+  color: black;
+}
+
+.amenidad {
+  background-color: #2abd0d;
+}
+
+/* Tooltip */
+.lote[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: -3.8em;
+  left: -0.5em;
+  transform: translateX(-50%, -50%); /* Centrar el tooltip */
+  white-space: pre-line;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 0.5em 2em;
+  border-radius: 6px;
+  font-size: 0.75em;
+  line-height: 1.5;
+  max-width: 90vw;
+  width: auto;
+  display: none;
+  z-index: 10;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.lote.mostrar-tooltip::after {
+  display: block;
+}
+
+/* Botones de zoom */
+.zoom-buttons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 999;
+}
+
+/* Leyenda de colores */
+.legend-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+}
+
+/* Adaptación para pantallas pequeñas */
+@media (max-width: 768px) {
+  #lotesContainer {
+    left: 0; /* Ajustado para pantallas pequeñas */
+  }
+  .lote {
+    width: 6em; /* Reducido el ancho */
+    height: 3.5em; /* Reducido la altura */
+    font-size: 0.35em;
+    line-height: 3.5em; /* Ajustado la altura de la línea */
+    margin: 0.2em; /* Añadido margen para mejor separación */
+    text-align: center;
+  }
+  .lote[data-tooltip]::after {
+    font-size: 0.75em;
+    width: auto; /* Ajustado para que se ajuste al contenido */
+    top: -3.8em; /* Ajustado la posición vertical */
+    left: 50%;
+    transform: translateX(-50%); /* Centrar el tooltip */
+    border-radius: 6px;
+  }
+  .zoom-buttons {
+    top: 5px; /* Ajustado la posición vertical */
+    right: 5px; /* Ajustado la posición horizontal */
+  }
+}

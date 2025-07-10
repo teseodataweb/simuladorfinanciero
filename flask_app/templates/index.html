@@ -1,181 +1,181 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Simulador Rancho Nuevo - Financiamiento de Lotes</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
-    />
-    <link rel="icon" href="{{ url_for('static', filename='favicon_nuevo.ico') }}" type="image/x-icon" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='wizard.css') }}">
-  </head>
 
-  <body>
-    <header class="text-center">
-<img src="{{ url_for('static', filename='logo.webp') }}" alt="Logo Rancho Nuevo" height="60" />
+<head>
+  <meta charset="UTF-8" />
+  <title>Simulador Rancho Nuevo - Financiamiento de Lotes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+  <link rel="icon" href="{{ url_for('static', filename='favicon_nuevo.ico') }}" type="image/x-icon" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='wizard.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='Plano/styles.css') }}">
+  
+</head>
 
-    </header>
-    <section class="hero-section">
-      <h2>
-        <i class="fa-solid fa-chart-simple me-2"></i>
-        Simulador Financiero
-      </h2>
-      <p>Llena los campos para calcular tu plan ideal según tu perfil. Ahora puedes financiar hasta 5 años.</p>
-      <div class="alert alert-info">
-        🎉 ¡Nuevo! Financia hasta 60 meses (5 años) con nuestros planes personalizados según tu perfil.
+<body>
+  <header class="text-center">
+    <img src="{{ url_for('static', filename='logo.webp') }}" alt="Logo Rancho Nuevo"/>
+
+  </header>
+  <section class="hero-section">
+    <h2>
+      <i class="fa-solid fa-chart-simple me-2"></i>
+      Simulador Financiero
+    </h2>
+    <p>Llena los campos para calcular tu plan ideal según tu perfil. Ahora puedes financiar hasta 5 años.</p>
+    <div class="alert alert-info">
+      🎉 ¡Nuevo! Financia hasta 60 meses (5 años) con nuestros planes personalizados según tu perfil.
+    </div>
+  </section>
+
+
+  <section class="plano-section">
+    <iframe src="{{ url_for('static', filename='Plano/plano.html') }}" style="width: 100%; height: 100vh; display: block"></iframe> 
+  </section>
+
+  <div class="container my-5">
+
+    <section class="row align-items-start">
+      <!-- Columna izquierda: Formulario y resultado -->
+      <div class="col-md-6">
+        <div class="card p-4 shadow" id="wizardForm">
+          <div id="step-indicator" class="text-end text-muted mb-2">Paso 1 de 6</div>
+
+          <!-- Paso 1 -->
+          <div class="wizard-step" data-step="1">
+            <label class="form-label">Zona del lote</label>
+            <div class="btn-group d-flex flex-wrap" role="group" id="zonaGrupo">
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="estandar">Estándar</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded"
+                data-value="intermedia">Intermedia</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="premium">Premium</button>
+            </div>
+            <input type="hidden" id="zona" required />
+          </div>
+
+          <!-- Paso 2 -->
+          <div class="wizard-step" data-step="2" style="display: none">
+            <label class="form-label">Rango de Ingresos</label>
+            <div class="btn-group d-flex flex-wrap" role="group" id="rangoIngresosGrupo">
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="<10">menos de 10K</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="10-15">10 a 15K</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="15-20">15 a 20K</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="20-25">20 a 25K</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="25-30">25 a 30K</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="30-35">30 a 35K</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="35-40">35 a 40K</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="40-50">40 a 50K</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="50-55">50 a 55K</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="55-60">55 a 60K</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="60+">60K+</button>
+            </div>
+            <input type="hidden" id="rangoIngresos" required />
+          </div>
+
+          <!-- Paso 3 -->
+          <div class="wizard-step" data-step="3" style="display: none">
+            <label class="form-label">Tipo de Ingresos</label>
+            <div class="btn-group d-flex flex-wrap" role="group" id="tipoIngresosGrupo">
+              <button type="button" class="btn btn-outline-primary m-1 rounded"
+                data-value="Comprobables 100%">Comprobables 100%</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Comprobable 75%">Comprobable
+                75%</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Comprobable 50%">Comprobable
+                50%</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Comprobable 25%">Comprobable
+                25%</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Informal">Informal</button>
+            </div>
+            <input type="hidden" id="tipoIngresos" required />
+          </div>
+
+          <!-- Paso 4 -->
+          <div class="wizard-step" data-step="4" style="display: none">
+            <label class="form-label">Rango de Edad</label>
+            <div class="btn-group d-flex flex-wrap" role="group" id="edadGrupo">
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="18-25">18-25</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="25-30">25-30</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="30-35">30-35</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="35-40">35-40</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="40-45">40-45</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="45-50">45-50</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="50-55">50-55</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="55-60">55-60</button>
+            </div>
+            <input type="hidden" id="edad" required />
+          </div>
+
+          <!-- Paso 5 -->
+          <div class="wizard-step" data-step="5" style="display: none">
+            <label class="form-label">Tipo de Crédito</label>
+            <div class="btn-group d-flex flex-wrap" role="group" id="tipoCreditoGrupo">
+              <button type="button" class="btn btn-outline-primary m-1 rounded"
+                data-value="Infonavit">Infonavit</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded"
+                data-value="Fovissste">Fovissste</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Bancario">Bancario</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Recursos Propios">Recursos
+                Propios</button>
+              <button type="button" class="btn btn-outline-primary m-1 rounded"
+                data-value="Credito Interno (Valdepeñas)">Crédito Interno (Valdepeñas)</button>
+            </div>
+            <input type="hidden" id="tipoCredito" required />
+          </div>
+          <div id="perfilCalculado" class="mt-3 text-center fw-bold text-info"></div>
+
+
+          <!-- Paso 6 -->
+          <div class="wizard-step" data-step="6" style="display: none">
+            <div id="resultadoFinal"></div>
+          </div>
+
+          <!-- Navegación -->
+          <div class="d-flex justify-content-between mt-4">
+            <button id="prevBtn" class="btn btn-outline-secondary" disabled>
+              <i class="fa-solid fa-arrow-left"></i> Atrás
+            </button>
+          </div>
+        </div>
+
+        <!-- Loader -->
+        <div id="resultado" class="fade-in mt-3">
+          <div id="loader" style="display: none" class="text-center">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Calculando...</span>
+            </div>
+            <p class="mt-2">Calculando...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna derecha: Perfiles -->
+      <div class="col-md-6">
+        <div class="d-flex flex-column gap-3">
+          <div class="perfil-card perfil-alto w-100 px-3 py-3">
+            <div class="icono"><i class="fa-solid fa-arrow-up-right-dots"></i></div>
+            <div class="titulo">Perfil Alto</div>
+            <div class="descripcion">Ingreso alto, 100% comprobable</div>
+          </div>
+
+          <div class="perfil-card perfil-medio w-100 px-3 py-3">
+            <div class="icono"><i class="fa-solid fa-scale-balanced"></i></div>
+            <div class="titulo">Perfil Medio</div>
+            <div class="descripcion">Ingreso medio, parcialmente comprobable</div>
+          </div>
+
+          <div class="perfil-card perfil-bajo w-100 px-3 py-3">
+            <div class="icono"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="titulo">Perfil Bajo</div>
+            <div class="descripcion">Ingreso informal, riesgo alto</div>
+          </div>
+        </div>
       </div>
     </section>
 
-      <section class="container my-4 text-center">
-        <h4 class="mb-3">Plano del Desarrollo</h4>
-        <img src="{{ url_for('static', filename='plano.png') }}" alt="Plano del Desarrollo Rancho Nuevo" class="img-fluid rounded shadow" style="max-width: 100%; height: auto;">
-      </section>
-
-      <div class="container my-5">
-
-        <section class="row align-items-start">
-          <!-- Columna izquierda: Formulario y resultado -->
-          <div class="col-md-6">
-            <div class="card p-4 shadow" id="wizardForm">
-              <div id="step-indicator" class="text-end text-muted mb-2">Paso 1 de 6</div>
-        
-              <!-- Paso 1 -->
-              <div class="wizard-step" data-step="1">
-                <label class="form-label">Zona del lote</label>
-                <div class="btn-group d-flex flex-wrap" role="group" id="zonaGrupo">
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="estandar">Estándar</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="intermedia">Intermedia</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="premium">Premium</button>
-                </div>
-                <input type="hidden" id="zona" required />
-              </div>
-        
-              <!-- Paso 2 -->
-              <div class="wizard-step" data-step="2" style="display: none">
-                <label class="form-label">Rango de Ingresos</label>
-                <div class="btn-group d-flex flex-wrap" role="group" id="rangoIngresosGrupo">
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="<10">menos de 10K</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="10-15">10 a 15K</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="15-20">15 a 20K</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="20-25">20 a 25K</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="25-30">25 a 30K</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="30-35">30 a 35K</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="35-40">35 a 40K</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="40-50">40 a 50K</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="50-55">50 a 55K</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="55-60">55 a 60K</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="60+">60K+</button>
-                </div>
-                <input type="hidden" id="rangoIngresos" required />
-              </div>
-        
-              <!-- Paso 3 -->
-              <div class="wizard-step" data-step="3" style="display: none">
-                <label class="form-label">Tipo de Ingresos</label>
-                <div class="btn-group d-flex flex-wrap" role="group" id="tipoIngresosGrupo">
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Comprobables 100%">Comprobables 100%</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Comprobable 75%">Comprobable 75%</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Comprobable 50%">Comprobable 50%</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Comprobable 25%">Comprobable 25%</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Informal">Informal</button>
-                </div>
-                <input type="hidden" id="tipoIngresos" required />
-              </div>
-        
-              <!-- Paso 4 -->
-              <div class="wizard-step" data-step="4" style="display: none">
-                <label class="form-label">Rango de Edad</label>
-                <div class="btn-group d-flex flex-wrap" role="group" id="edadGrupo">
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="18-25">18-25</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="25-30">25-30</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="30-35">30-35</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="35-40">35-40</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="40-45">40-45</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="45-50">45-50</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="50-55">50-55</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="55-60">55-60</button>
-                </div>
-                <input type="hidden" id="edad" required />
-              </div>
-        
-              <!-- Paso 5 -->
-              <div class="wizard-step" data-step="5" style="display: none">
-                <label class="form-label">Tipo de Crédito</label>
-                <div class="btn-group d-flex flex-wrap" role="group" id="tipoCreditoGrupo">
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Infonavit">Infonavit</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Fovissste">Fovissste</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Bancario">Bancario</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Recursos Propios">Recursos Propios</button>
-                  <button type="button" class="btn btn-outline-primary m-1 rounded" data-value="Credito Interno (Valdepeñas)">Crédito Interno (Valdepeñas)</button>
-                </div>
-                <input type="hidden" id="tipoCredito" required />
-              </div>
-              <div id="perfilCalculado" class="mt-3 text-center fw-bold text-info"></div>
-
-        
-              <!-- Paso 6 -->
-              <div class="wizard-step" data-step="6" style="display: none">
-                <div id="resultadoFinal"></div>
-              </div>
-        
-              <!-- Navegación -->
-              <div class="d-flex justify-content-between mt-4">
-                <button id="prevBtn" class="btn btn-outline-secondary" disabled>
-                  <i class="fa-solid fa-arrow-left"></i> Atrás
-                </button>
-              </div>
-            </div>
-        
-            <!-- Loader -->
-            <div id="resultado" class="fade-in mt-3">
-              <div id="loader" style="display: none" class="text-center">
-                <div class="spinner-border text-primary" role="status">
-                  <span class="visually-hidden">Calculando...</span>
-                </div>
-                <p class="mt-2">Calculando...</p>
-              </div>
-            </div>
-          </div>
-        
-  <!-- Columna derecha: Perfiles -->
-  <div class="col-md-6">
-    <div class="d-flex flex-column gap-3">
-      <div class="perfil-card perfil-alto w-100 px-3 py-3">
-        <div class="icono"><i class="fa-solid fa-arrow-up-right-dots"></i></div>
-        <div class="titulo">Perfil Alto</div>
-        <div class="descripcion">Ingreso alto, 100% comprobable</div>
-      </div>
-
-      <div class="perfil-card perfil-medio w-100 px-3 py-3">
-        <div class="icono"><i class="fa-solid fa-scale-balanced"></i></div>
-        <div class="titulo">Perfil Medio</div>
-        <div class="descripcion">Ingreso medio, parcialmente comprobable</div>
-      </div>
-
-      <div class="perfil-card perfil-bajo w-100 px-3 py-3">
-        <div class="icono"><i class="fa-solid fa-triangle-exclamation"></i></div>
-        <div class="titulo">Perfil Bajo</div>
-        <div class="descripcion">Ingreso informal, riesgo alto</div>
-      </div>
-    </div>
   </div>
-        </section>
-        
-    </div>
-    <!--
-    <iframe src="{{ url_for('visor') }}"
-    src="visor.html"
-    frameborder="0"
-    allowfullscreen
-    style="width: 100%; height: 450px; display: block; border: none;"
-  ></iframe> -->
+
 
 
   <script>
@@ -183,82 +183,80 @@
       const steps = document.querySelectorAll(".wizard-step");
       let currentStep = 1;
       const totalSteps = steps.length;
-  
+
       function showStep(step) {
         steps.forEach((el) => {
           el.style.display = el.dataset.step == step ? "block" : "none";
         });
-  
+
         document.getElementById("step-indicator").textContent = `Paso ${step} de ${totalSteps}`;
         document.getElementById("prevBtn").disabled = step === 1;
       }
-  
+
       function avanzarPasoSiguiente() {
         if (currentStep < totalSteps) {
           currentStep++;
           showStep(currentStep);
-  
+
           if (currentStep === totalSteps) {
             document.getElementById("loader").style.display = "block";
             calcular(); // ya lo tienes definido
           }
         }
       }
-  
+
       function retrocederPaso() {
         if (currentStep > 1) {
           currentStep--;
           showStep(currentStep);
         }
       }
-  
+
       // Avanzar al hacer clic en un botón de grupo
       document.querySelectorAll(".wizard-step .btn-group button").forEach((button) => {
         button.addEventListener("click", function () {
           const group = this.parentElement;
           group.querySelectorAll("button").forEach((btn) => btn.classList.remove("active"));
           this.classList.add("active");
-  
+
           const inputId = group.id.replace("Grupo", "");
           const inputHidden = document.getElementById(inputId);
           if (inputHidden) {
             inputHidden.value = this.getAttribute("data-value");
           }
-  
+
           setTimeout(() => avanzarPasoSiguiente(), 400);
         });
       });
-  
+
       document.getElementById("prevBtn").addEventListener("click", retrocederPaso);
-  
+
       // Mostrar el primer paso al cargar
       showStep(currentStep);
     });
   </script>
-  
 
-    <script>
-      function mostrarResultados(data) {
-        if (
-          data.precio <= 0 ||
-          data.enganche <= 0 ||
-          data.mensualidad <= 0 ||
-          data.totalPagado <= 0 ||
-          isNaN(data.roi)
-        ) {
-          document.getElementById("resultadoFinal").innerHTML = `
-          <div class="alert alert-danger">⚠️ No se pudo calcular un escenario válido. Revisa los datos ingresados o prueba otra combinación.</div>`;
-          return;
-        }
 
+  <script>
+    function mostrarResultados(data) {
+      if (
+        data.precio <= 0 ||
+        data.enganche <= 0 ||
+        data.mensualidad <= 0 ||
+        data.totalPagado <= 0 ||
+        isNaN(data.roi)
+      ) {
         document.getElementById("resultadoFinal").innerHTML = `
+          <div class="alert alert-danger">⚠️ No se pudo calcular un escenario válido. Revisa los datos ingresados o prueba otra combinación.</div>`;
+        return;
+      }
+
+      document.getElementById("resultadoFinal").innerHTML = `
         <div class="wizard-step" data-step="6">
           <div class="alert alert-primary text-center mb-4" role="alert">
             <i class="fa-solid fa-star me-2"></i>
-            <strong id="resPlan">${
-              data.plan
-            }</strong> – <span id="resResumen">${
-          data.plazo
+            <strong id="resPlan">${data.plan
+        }</strong> – <span id="resResumen">${data.plazo
         } meses, ${Math.round(
           (data.enganche / data.precio) * 100
         )}% enganche</span>
@@ -269,128 +267,128 @@
           <div class="row text-center">
             <div class="col-6 mb-3"><p class="small text-muted">Precio final</p><div class="fw-bold fs-5 text-primary">$${data.precio.toLocaleString()}</div></div>
             <div class="col-6 mb-3"><p class="small text-muted">Enganche</p><div class="fw-bold fs-5 text-primary">$${data.enganche.toLocaleString()}</div></div>
-            <div class="col-6 mb-3"><p class="small text-muted">Plazo</p><div class="fw-bold fs-5 text-primary">${
-              data.plazo
-            } meses</div></div>
+            <div class="col-6 mb-3"><p class="small text-muted">Plazo</p><div class="fw-bold fs-5 text-primary">${data.plazo
+        } meses</div></div>
             <div class="col-6 mb-3"><p class="small text-muted">Mensualidad</p><div class="fw-bold fs-5 text-primary">$${data.mensualidad.toLocaleString(
-              undefined,
-              { minimumFractionDigits: 2 }
-            )}</div></div>
+          undefined,
+          { minimumFractionDigits: 2 }
+        )}</div></div>
             <div class="col-6 mb-3"><p class="small text-muted">Valor futuro</p><div class="fw-bold fs-5 text-primary">$${data.valorFuturo.toLocaleString(
-              undefined,
-              { minimumFractionDigits: 2 }
-            )}</div></div>
+          undefined,
+          { minimumFractionDigits: 2 }
+        )}</div></div>
             <div class="col-6 mb-3"><p class="small text-muted">Total pagado</p><div class="fw-bold fs-5 text-primary">$${data.totalPagado.toLocaleString(
-              undefined,
-              { minimumFractionDigits: 2 }
-            )}</div></div>
+          undefined,
+          { minimumFractionDigits: 2 }
+        )}</div></div>
             <div class="col-6 mb-3"><p class="small text-muted">Ganancia</p><div class="fw-bold fs-5 text-primary">$${data.ganancia.toLocaleString(
-              undefined,
-              { minimumFractionDigits: 2 }
-            )}</div></div>
+          undefined,
+          { minimumFractionDigits: 2 }
+        )}</div></div>
             <div class="col-6 mb-3"><p class="small text-muted">ROI</p><div class="fw-bold fs-5 text-primary">${data.roi.toFixed(
-              1
-            )}%</div></div>
+          1
+        )}%</div></div>
           </div>
           <div class="text-center mt-4">
             <a href="https://wa.me/5217712660637" class="btn btn-success btn-lg">Contactar Asesor</a>
           </div>
         </div>`;
-      }
+    }
 
-      async function calcular() {
-    const zona = document.getElementById("zona")?.value;
-    const rangoIngresos = document.getElementById("rangoIngresos")?.value;
-    const tipoIngreso = document.getElementById("tipoIngresos")?.value;
-    const edad = document.getElementById("edad")?.value;
-    const tipoCredito = document.getElementById("tipoCredito")?.value;
+    async function calcular() {
+      const zona = document.getElementById("zona")?.value;
+      const rangoIngresos = document.getElementById("rangoIngresos")?.value;
+      const tipoIngreso = document.getElementById("tipoIngresos")?.value;
+      const edad = document.getElementById("edad")?.value;
+      const tipoCredito = document.getElementById("tipoCredito")?.value;
 
-    if (!zona || !rangoIngresos || !tipoIngreso || !edad || !tipoCredito) {
-      document.getElementById("resultadoFinal").innerHTML = `
+      if (!zona || !rangoIngresos || !tipoIngreso || !edad || !tipoCredito) {
+        document.getElementById("resultadoFinal").innerHTML = `
         <div class="alert alert-warning text-center">⚠️ Faltan datos para realizar la simulación.</div>`;
-      document.getElementById("loader").style.display = "none";
-      return;
-    }
-
-    // Arma el objeto para enviar al backend
-    const datos = {
-      precioFinal: 1000000, // puedes hacerlo dinámico si quieres
-      enganchePorcentaje: 20, // puedes cambiar esto según lógica del wizard
-      plazoAnios: 5,
-      frecuenciaPago: "Mensual",
-      edad: edad,
-      rangoIngresos: rangoIngresos,
-      tipoIngreso: tipoIngreso,
-      zonaLote: zona.charAt(0).toUpperCase() + zona.slice(1), // capitalizar
-      tipoCredito: tipoCredito,
-      codigoPostal: "" // opcional por ahora
-    };
-    console.log("📦 Enviando datos a backend:", datos);
-
-    try {
-      const response = await fetch("/simular", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(datos)
-});
-
-      const resultados = await response.json();
-
-      mostrarResultados({
-        plan: (resultados.nivel_riesgo || "desconocido").toUpperCase(),
-        precio: datos.precioFinal,
-        enganche: resultados.valor_enganche,
-        plazo: resultados.num_pagos,
-        mensualidad: resultados.mensualidad,
-        valorFuturo: resultados.valor_futuro,
-        totalPagado: resultados.total_pagado,
-        ganancia: resultados.ganancia_estimada,
-        roi: resultados.roi * 100,
-      });
-
-    } catch (error) {
-      console.error("Error:", error);
-      document.getElementById("resultadoFinal").innerHTML = `
-        <div class="alert alert-danger text-center">❌ Hubo un problema con el servidor.</div>`;
-    }
-
-    document.getElementById("loader").style.display = "none";
-  }
-    </script>
-    <script>
-      let currentStep = 1;
-      const totalSteps = 6;
-    
-      function showStep(step) {
-        document.querySelectorAll('.wizard-step').forEach(el => {
-          el.style.display = el.dataset.step == step ? 'block' : 'none';
-        });
-    
-        document.getElementById('step-indicator').textContent = `Paso ${step} de ${totalSteps}`;
-        document.getElementById('prevBtn').disabled = step === 1;
+        document.getElementById("loader").style.display = "none";
+        return;
       }
-    
-      document.getElementById('prevBtn').addEventListener('click', () => {
-        if (currentStep > 1) {
-          currentStep--;
-          showStep(currentStep);
-        }
-      });
-    
-      // Si también tienes botón "Siguiente", podrías agregar:
-      // document.getElementById('nextBtn').addEventListener('click', () => {
-      //   if (currentStep < totalSteps) {
-      //     currentStep++;
-      //     showStep(currentStep);
-      //   }
-      // });
-    
-      // Mostrar paso inicial al cargar
-      document.addEventListener('DOMContentLoaded', () => {
-        showStep(currentStep);
-      });
-    </script>
-    <script src="{{ url_for('static', filename='wizard.js') }}"></script>
 
-  </body>
+      // Arma el objeto para enviar al backend
+      const datos = {
+        precioFinal: 1000000, // puedes hacerlo dinámico si quieres
+        enganchePorcentaje: 20, // puedes cambiar esto según lógica del wizard
+        plazoAnios: 5,
+        frecuenciaPago: "Mensual",
+        edad: edad,
+        rangoIngresos: rangoIngresos,
+        tipoIngreso: tipoIngreso,
+        zonaLote: zona.charAt(0).toUpperCase() + zona.slice(1), // capitalizar
+        tipoCredito: tipoCredito,
+        codigoPostal: "" // opcional por ahora
+      };
+      console.log("📦 Enviando datos a backend:", datos);
+
+      try {
+        const response = await fetch("/simular", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(datos)
+        });
+
+        const resultados = await response.json();
+
+        mostrarResultados({
+          plan: (resultados.nivel_riesgo || "desconocido").toUpperCase(),
+          precio: datos.precioFinal,
+          enganche: resultados.valor_enganche,
+          plazo: resultados.num_pagos,
+          mensualidad: resultados.mensualidad,
+          valorFuturo: resultados.valor_futuro,
+          totalPagado: resultados.total_pagado,
+          ganancia: resultados.ganancia_estimada,
+          roi: resultados.roi * 100,
+        });
+
+      } catch (error) {
+        console.error("Error:", error);
+        document.getElementById("resultadoFinal").innerHTML = `
+        <div class="alert alert-danger text-center">❌ Hubo un problema con el servidor.</div>`;
+      }
+
+      document.getElementById("loader").style.display = "none";
+    }
+  </script>
+  <script>
+    let currentStep = 1;
+    const totalSteps = 6;
+
+    function showStep(step) {
+      document.querySelectorAll('.wizard-step').forEach(el => {
+        el.style.display = el.dataset.step == step ? 'block' : 'none';
+      });
+
+      document.getElementById('step-indicator').textContent = `Paso ${step} de ${totalSteps}`;
+      document.getElementById('prevBtn').disabled = step === 1;
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      if (currentStep > 1) {
+        currentStep--;
+        showStep(currentStep);
+      }
+    });
+
+    // Si también tienes botón "Siguiente", podrías agregar:
+    // document.getElementById('nextBtn').addEventListener('click', () => {
+    //   if (currentStep < totalSteps) {
+    //     currentStep++;
+    //     showStep(currentStep);
+    //   }
+    // });
+
+    // Mostrar paso inicial al cargar
+    document.addEventListener('DOMContentLoaded', () => {
+      showStep(currentStep);
+    });
+  </script>
+
+  <script src="{{ url_for('static', filename='wizard.js') }}"></script>
+</body>
+
 </html>
